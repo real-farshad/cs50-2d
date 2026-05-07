@@ -56,12 +56,40 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+    if gameState == 'play' then
+        if ball:colides(player1) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player1.x + 5
+
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        elseif ball:colides(player2) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player2.x - 5
+
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+
+        if ball.y <= 0 then
+            ball.y = 0
+            ball.dy = -ball.dy
+        elseif ball.y >= VIRTUAL_HEIGHT - 4 then
+            ball.y = VIRTUAL_HEIGHT - 4
+            ball.dy = -ball.dy
+        end
+    end
+
     if love.keyboard.isDown('w') then
         player1.dy = -PADDLE_SPEED
         player1:update(dt)
-    end
-
-    if love.keyboard.isDown('s') then
+    elseif love.keyboard.isDown('s') then
         player1.dy = PADDLE_SPEED
         player1:update(dt)
     end
@@ -69,9 +97,7 @@ function love.update(dt)
     if love.keyboard.isDown('up') then
         player2.dy = -PADDLE_SPEED
         player2:update(dt)
-    end
-
-    if love.keyboard.isDown('down') then
+    elseif love.keyboard.isDown('down') then
         player2.dy = PADDLE_SPEED
         player2:update(dt)
     end
