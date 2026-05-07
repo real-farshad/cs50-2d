@@ -1,0 +1,6 @@
+{
+    "editor.defaultFormatter": "pixelbyte-studios.pixelbyte-love2d",
+    "[lua]": {
+        "editor.defaultFormatter": "yinfei.luahelper"
+    }
+}
